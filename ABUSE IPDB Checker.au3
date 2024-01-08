@@ -1,3 +1,10 @@
+#pragma compile(Icon, abuseipdb-logo.ico)
+#pragma compile(Console, False)
+#pragma compile(x64, False)
+#pragma compile(UPX, True)
+#pragma compile(FileVersion, 1.0.0.0)
+#pragma compile(ProductVersion, 1.0.0.0)
+
 #include <GUIConstantsEx.au3>
 #include <WindowsConstants.au3>
 #include <ListViewConstants.au3>
@@ -117,11 +124,9 @@ EndFunc
 
 ;=======Function 1Dto2DArray==================
 
+;~ ;=======Function 1Dto2DArray==================
 Func _1Dto2DArray(Const ByRef $a1D, $iCol = 1)
-  If Not IsArray($a1D) Or UBound($a1D, 0) <> 1 Then Return SetError(1, 0, 0)
-  If $iCol < 1 Then Return SetError(2, 0, 0)
   Local $iLen = UBound($a1D)
-  If $iLen = 1 Then Return [[ $a1D[0] ]]
   Local $a2D[Ceiling($iLen / $iCol)][$iCol], $Line, $j
   For $i = 0 To $iLen - 1
     $a2D[$Line][$j] = $a1D[$i]
@@ -275,4 +280,4 @@ If @error Then Exit MsgBox($MB_SYSTEMMODAL, "ERROR", "Error writing to worksheet
 $oExcel.Columns('A:K' ).EntireColumn.AutoFit
 GUIDelete($GUI)
 Wend
-_cURL_Shutdown()
+;_cURL_Shutdown()
