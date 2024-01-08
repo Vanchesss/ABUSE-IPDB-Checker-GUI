@@ -1,6 +1,7 @@
 #pragma compile(Icon, abuseipdb-logo.ico)
 #pragma compile(Console, False)
-#pragma compile(x64, False)
+#pragma compile(x64, True)
+#pragma compile(Compatibility, Win10)
 #pragma compile(UPX, True)
 #pragma compile(FileVersion, 1.0.0.0)
 #pragma compile(ProductVersion, 1.0.0.0)
@@ -49,6 +50,24 @@ EndFunc
 
 
 ;--------------Functions----------------------
+
+;==============Function Output to .CSV==============
+func _ArraytoCSVFile ($filename,$array)
+    if not IsArray($array) then return -1
+    dim $tmpArray[ubound($array,1)]
+    for $iRow = 0 to UBound($array,1)-1
+        $CurrentRow = ""
+        $nullrow = true
+        for $iColumn = 0 to ubound($array,2)-1
+            $CurrentCell = StringReplace ($array[$iRow][$iColumn],",","")
+            $CurrentRow &= $currentcell &","
+        next
+        $CurrentRow = StringTrimRight($CurrentRow,1)
+        $tmparray[$iRow] = $currentRow
+    next
+    _FileWriteFromArray ($filename, $tmparray)
+EndFunc
+;==============End Function Output to .CSV==============
 
 ;==============Checking the IP address format==============
 Func ValidIP($vd_IP)
@@ -267,6 +286,7 @@ $aFin=_1Dto2DArray($p_IP, $kolarr-1)
 _ArraySwap_Rows_Columns($aFin)
 $p_header2=_1Dto2DArray($p_header, 9)
 _ArrayConcatenate($p_header2,$aFin)
+_ArraytoCSVFile("Result.csv", $p_header2)
 Local $oExcel = _Excel_Open()
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "Excel UDF: _Excel_RangeWrite Example", "Error creating the Excel application object." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 Local $oWorkbook = _Excel_BookNew($oExcel)
@@ -279,5 +299,6 @@ _Excel_RangeWrite($oWorkbook,$oWorkbook.Activesheet, $p_header2, "A1")
 If @error Then Exit MsgBox($MB_SYSTEMMODAL, "ERROR", "Error writing to worksheet." & @CRLF & "@error = " & @error & ", @extended = " & @extended)
 $oExcel.Columns('A:K' ).EntireColumn.AutoFit
 GUIDelete($GUI)
+
 Wend
 ;_cURL_Shutdown()
