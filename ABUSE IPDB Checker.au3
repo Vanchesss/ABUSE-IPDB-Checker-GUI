@@ -69,33 +69,40 @@ EndFunc
 
 ;=======Main GUI==================
 Func _Input($Title = "")
-  Global $GUI = GUICreate($Title, 560, 620)
+  Global $GUI = GUICreate($Title, 560, 650)
   Local $Input = GUICtrlCreateEdit("", 30, 170, 500,200)
   Local $BtnOK = GUICtrlCreateButton("Check", 100, 550, 150,40, -1, 0x01) ; $BS_DEFPUSHBUTTON
   Local $BtnCancel = GUICtrlCreateButton("Exit", 300, 550, 150,40)
-  Local $Pic1 = GUICtrlCreatePic(@ScriptDir & "/abuseipdb.png.pagespeed.ce.CI8T6WsXU7.res", 140, 4, 267, 97)
-   Global $Label1 = GUICtrlCreateLabel("Enter the IP as a column (each address starts on a new line)", 30, 138, 500, 24)
+  Local $Pic1 = GUICtrlCreatePic(@ScriptDir & "/abuseipdb.res", 140, 4, 267, 97)
+
+	Global $Label2 = GUICtrlCreateLabel("Github", 260, 615, 35, 17)
+	GUICtrlSetFont(-1, 9, 10, 4, "MS Sans Serif")
+	GUICtrlSetColor(-1, 0x0000FF)
+
+	Global $Label1 = GUICtrlCreateLabel("Enter the IP as a column (each address starts on a new line)", 30, 138, 500, 24)
 	GUICtrlSetFont(-1, 12, 400, 0, "MS Sans Serif")
 	Global $LabelLimitRemaining = GUICtrlCreateLabel("", 30, 500, 496, 24)
 	GUICtrlSetFont(-1, 10, 400, 0, "MS Sans Serif")
-
-Global $prProgress1 = GUICtrlCreateProgress(30, 416, 500, 49)
-Global $prtext1 = GUICtrlCreateLabel("Ready ", 28, 380, 503, 28)
-GUICtrlSetFont(-1, 12, 400, 0, "MS Sans Serif")
-GUICtrlSetFont(-1, 12, 400, 0, "MS Sans Serif")
-;Global $prLabel1 = GUICtrlCreateLabel("0", 382, 381, 52, 28)
-;GUICtrlSetFont(-1, 12, 400, 0, "MS Sans Serif")
+  Global $prProgress1 = GUICtrlCreateProgress(30, 416, 500, 49)
+  Global $prtext1 = GUICtrlCreateLabel("Ready ", 28, 380, 503, 28)
+  GUICtrlSetFont(-1, 12, 400, 0, "MS Sans Serif")
 
 GUISetState(@SW_SHOW)
+
+GUICtrlSetCursor($Label2, 0)
+GUICtrlSetBkColor($Label2, $GUI_BKCOLOR_TRANSPARENT)
+
+
  GUISetState()
   GUISetState()
-  ;$Text=0
   Global $Text = GUICtrlRead($Input)
    Do
      Switch GUIGetMsg()
+			Case $Label2
+					ShellExecute("https://github.com/Vanchesss/ABUSE-IPDB-Checker-GUI")
 		  Case -3, $BtnCancel
 			  exit
-       Case $BtnOK
+			Case $BtnOK
          $Text = GUICtrlRead($Input)
 				  If $Text = "" Then
                 MsgBox(16, "Error", "Please enter the text")
@@ -203,7 +210,7 @@ $TotalSize=$kolarr+1
 $Percent = $prfinal/$TotalSize * 100
 GUICtrlSetData($prProgress1, $Percent)
 $okrug = StringFormat("%.0f", $Percent) ;rounding % to integers
-GUICtrlSetData( $prtext1, 'Objects checked:  '&$i+1&'  from  '&$TotalSize&'                                                        '&$okrug&' %' )
+GUICtrlSetData( $prtext1, 'Objects checked:  '&$i+1&'  out of  '&$TotalSize&'                                                        '&$okrug&' %' )
 $hCURL = _cURL_Easy_Init()
 $IPaddress='https://api.abuseipdb.com/api/v2/check?ipAddress=' & $array1[$i] ;GET request to the API
 ConsoleWrite($IPaddress)
