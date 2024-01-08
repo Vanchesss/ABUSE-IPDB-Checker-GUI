@@ -237,7 +237,7 @@ $p_Limit=StringRegExp($slines,'X-RateLimit-Limit: (.+?...)',3); Limit
 $p_Remaining= StringRegExp($slines,'X-RateLimit-Remaining:(.+?...)',3) ; Remaining
 $p_minLimit=_ArrayMin($p_Limit, 1, 1)
 $p_minRemaining=_ArrayMin($p_Remaining, 1, 1) ;API requests remaining per day
-$p_LimitRemaining= "The limit of requests for the current API_KEY is "&@MDAY & "." & @MON & "." & @YEAR&':                              '&$p_minRemaining&"/"&$p_minLimit;осталось запросов к API за день
+$p_LimitRemaining= "The limit of requests for the current API_KEY is "&@MDAY & "." & @MON & "." & @YEAR&':                              '&$p_minRemaining&"/"&$p_minLimit
 GUICtrlSetData($LabelLimitRemaining, $p_LimitRemaining)
 _ArrayConcatenate($p_IP,$p_abuseConfidenceScore)
 _ArrayConcatenate($p_IP,$p_totalReports)
